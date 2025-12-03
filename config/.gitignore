@@ -1,0 +1,9 @@
+# Fichiers de dépendances Node
+/node_modules
+
+# Fichiers sensibles
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
