@@ -3,10 +3,12 @@ import Resource from '../models/Resource.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import mongoose from 'mongoose';
+import ResourceType from '../models/ResourceType.js';
 
 const router = express.Router();
 
-// --- TÂCHE SPECIALE : Import Initial JSON [cite: 10, 54] ---
+// --- TÂCHE SPECIALE : Import Initial JSON  ---
 // Cette fonction lit le JSON et remplit la base si elle est vide.
 // Tu peux appeler cette logique au démarrage du serveur ou via une route spéciale de setup.
 const importData = async () => {
@@ -15,7 +17,7 @@ const importData = async () => {
         if (count === 0) {
             const __dirname = path.dirname(fileURLToPath(import.meta.url));
             const dataPath = path.join(__dirname, '../data/resources.json');
-            const jsonData = JSON.parse(fs.readFileSync(dataPath, 'utf-8')); // Lecture synchrone [cite: 56]
+            const jsonData = JSON.parse(fs.readFileSync(dataPath, 'utf-8')); 
             
             await Resource.insertMany(jsonData);
             console.log("Données resources.json importées avec succès !");
@@ -24,7 +26,6 @@ const importData = async () => {
         console.error("Erreur d'import JSON:", error);
     }
 };
-// On lance l'import (ou tu peux créer une route POST /setup pour le déclencher manuellement)
 importData();
 
 
@@ -51,17 +52,24 @@ router.put('/:id', async (req, res) => {
 // Exemple appel : GET /resources?type=salle&capa_min=10
 router.get('/', async (req, res) => {
     try {
-        const { type, capa_min } = req.query;
+        // AJOUT : On récupère aussi 'status' depuis l'URL
+        const { type, capa_min, status } = req.query;
         let filter = {};
 
-        // Filtre par type si fourni
+        // Filtre par type (Étudiant 2)
         if (type) {
             filter.type = type;
         }
 
-        // Filtre par capacité minimum (greater than or equal - $gte)
+        // Filtre par capacité (Étudiant 2)
         if (capa_min) {
             filter.capacity = { $gte: Number(capa_min) };
+        }
+
+        
+        // Filtre par statut (disponible/maintenance)
+        if (status) {
+            filter.status = status;
         }
 
         const resources = await Resource.find(filter);
@@ -70,7 +78,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 // --- ROUTE 3 : Agrégation ($lookup) ---
 // Objectif : Top 5 des ressources les plus réservées [cite: 13]
@@ -117,5 +124,34 @@ router.get('/top-reserved', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+// routes etudient 4
+
+//POST Créer un type de ressource
+router.post('/resource-types', async (req, res) => {
+    try {
+        const { name, description } = req.body;
+        if (!name) return res.status(400).json({ message: 'Nom requis' });
+        
+        const newType = await ResourceType.create({ name, description });
+        res.status(201).json({ message: 'Type créé', data: newType });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// GET Stats par localisation
+router.get('/stats/by-location', async (req, res) => {
+    try {
+        const stats = await Resource.aggregate([
+            { $group: { _id: "$location", totalResources: { $sum: 1 } } },
+            { $sort: { totalResources: -1 } }
+        ]);
+        res.json({ message: 'Statistiques par localisation', data: stats });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 
 export default router;
