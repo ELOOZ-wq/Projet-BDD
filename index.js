@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express"; 
 import { connectToDb } from './config/mongoClient.js';
 import resourceRoutes from './routes/resourceRoutes.js';
+import logRoutes from './routes/logRoutes.js';
 //import userRoutes from './routes/userRoutes.js';
 //import bookingRoutes from './routes/bookingRoutes.js';
  
@@ -18,6 +19,7 @@ async function startServer() {
         await connectToDb(); 
         
         app.use("/api/resources", resourceRoutes); 
+        app.use("/api/logs", logRoutes);
         //app.use("/api/users", userRoutes);        
         //app.use("/api/bookings", bookingRoutes);    
 
