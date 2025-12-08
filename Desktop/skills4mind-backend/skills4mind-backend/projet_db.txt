@@ -1,0 +1,2 @@
+PORT=3000
+MONGO_URI=mongodb+srv://bouzenbouaalicia4_db_user:06102006alissiaBzn@cluster0.f8e1ybw.mongodb.net/?retryWrites=true&w=majority

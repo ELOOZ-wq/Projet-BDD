@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Alex Durand",
+    "email": "alex.durand@import.com",
+    "role": "client",
+    "age": 28
+  },
+  {
+    "name": "Sophie Martin",
+    "email": "sophie.martin@import.com",
+    "role": "admin",
+    "age": 45
+  }
+]
