@@ -1,0 +1,26 @@
+[
+  {
+    "titre": "Conférence Tech 2024",
+    "categorie": "Conférence",
+    "date": "2024-06-15T09:00:00.000Z",
+    "lieu": "Amphithéâtre A",
+    "statut": "planifie",
+    "description": "Les nouvelles tendances du Web."
+  },
+  {
+    "titre": "Atelier Node.js Avancé",
+    "categorie": "Atelier",
+    "date": "2024-07-20T14:00:00.000Z",
+    "lieu": "Salle Informatique 3",
+    "statut": "planifie",
+    "description": "Maîtriser le backend."
+  },
+  {
+    "titre": "Hackathon 48h",
+    "categorie": "Compétition",
+    "date": "2024-09-01T18:00:00.000Z",
+    "lieu": "Cafétéria",
+    "statut": "annule",
+    "description": "Développement non-stop."
+  }
+]

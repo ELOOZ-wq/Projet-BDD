@@ -1,0 +1,23 @@
+[
+  {
+    "action": "SERVER_START",
+    "performedBy": "System",
+    "status": "success",
+    "severity": "info",
+    "metadata": { "version": "1.0.0", "env": "dev" }
+  },
+  {
+    "action": "LOGIN_FAILED",
+    "performedBy": "user_hacker",
+    "status": "failure",
+    "severity": "warning",
+    "context": { "attempts": 3, "ip": "192.168.1.55" }
+  },
+  {
+    "action": "DB_CONNECTION_ERROR",
+    "performedBy": "System",
+    "status": "failure",
+    "severity": "critical",
+    "metadata": { "error_code": 500 }
+  }
+]

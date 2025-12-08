@@ -1,0 +1,5 @@
+[
+  { "name": "Admin Principal", "email": "admin@school.com", "role": "admin" },
+  { "name": "Pierre Durand", "email": "pierre@test.com", "role": "staff" },
+  { "name": "Sophie Martin", "email": "sophie@client.com", "role": "client" }
+]

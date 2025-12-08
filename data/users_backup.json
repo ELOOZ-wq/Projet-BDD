@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "6937545ae0513eb4f728d50b",
+    "name": "Admin Principal",
+    "email": "admin@school.com",
+    "role": "admin",
+    "createdAt": "2025-12-08T22:42:34.366Z",
+    "__v": 0
+  },
+  {
+    "_id": "6937545ae0513eb4f728d50c",
+    "name": "Pierre Durand",
+    "email": "pierre@test.com",
+    "role": "staff",
+    "createdAt": "2025-12-08T22:42:34.368Z",
+    "__v": 0
+  },
+  {
+    "_id": "6937545ae0513eb4f728d50d",
+    "name": "Sophie Martin",
+    "email": "sophie@client.com",
+    "role": "client",
+    "createdAt": "2025-12-08T22:42:34.368Z",
+    "__v": 0
+  },
+  {
+    "_id": "693754ade0513eb4f728d510",
+    "name": "Nouveau",
+    "email": "new@test.com",
+    "role": "client",
+    "createdAt": "2025-12-08T22:43:57.863Z",
+    "__v": 0
+  }
+]

@@ -49,7 +49,7 @@ router.put('/registrations/:id/statut', async (req, res) => {
 });
 
 // Recherche d'événements avec filtres (titre, catégorie, statut) + pagination
-router.get('/events/recherche', async (req, res) => {
+router.get('/recherche', async (req, res) => {
   try {
     const { recherche, categorie, statut, page = 1, limit = 10 } = req.query;
 
@@ -207,7 +207,7 @@ router.get('/statistiques/export', async (req, res) => {
 });
 
 // Import d'événements depuis un fichier JSON dans data/
-router.post('/events/import', async (req, res) => {
+router.post('/import', async (req, res) => {
   try {
     const { filename } = req.body;
 

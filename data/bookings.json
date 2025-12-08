@@ -1,0 +1,26 @@
+[
+  {
+    "userId": "Jean_Dupont",
+    "resourceId": "6561f9b8c0a8a8a8a8a8a8a8", 
+    "date_debut": "2024-05-10T09:00:00.000Z",
+    "duration": 120,
+    "price": 50,
+    "status": "confirmed"
+  },
+  {
+    "userId": "Marie_Curie",
+    "resourceId": "6561f9b8c0a8a8a8a8a8a8a8",
+    "date_debut": "2024-06-12T14:00:00.000Z",
+    "duration": 60,
+    "price": 150,
+    "status": "confirmed"
+  },
+  {
+    "userId": "Bad_User",
+    "resourceId": "6561f9b8c0a8a8a8a8a8a8a8",
+    "date_debut": "2024-07-01T10:00:00.000Z",
+    "duration": 180,
+    "price": 500,
+    "status": "cancelled"
+  }
+]
