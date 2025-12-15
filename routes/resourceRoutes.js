@@ -81,18 +81,16 @@ router.get('/', async (req, res) => {
 
 // --- ROUTE 3 : Agrégation ($lookup) ---
 // Objectif : Top 5 des ressources les plus réservées [cite: 13]
-// Note : Cela suppose que la collection "bookings" (gérée par l'Étudiant 3) existe 
-// et possède un champ "resourceId".
 router.get('/top-reserved', async (req, res) => {
     try {
         const stats = await Resource.aggregate([
             {
-                // Jointure avec la collection 'bookings' [cite: 13, 50]
+                // Jointure avec la collection 'bookings' 
                 $lookup: {
-                    from: 'bookings',       // Nom de la collection cible (minuscule + s par défaut dans Mongo)
-                    localField: '_id',      // Champ ID dans Resources
-                    foreignField: 'resourceId', // Champ de liaison dans Bookings (supposé)
-                    as: 'reservations'      // Nom du tableau résultant
+                    from: 'bookings',       
+                    localField: '_id',      
+                    foreignField: 'resourceId', 
+                    as: 'reservations'     
                 }
             },
             {

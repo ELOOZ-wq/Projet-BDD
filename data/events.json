@@ -23,4 +23,27 @@
     "statut": "annule",
     "description": "Développement non-stop."
   }
+  ,
+  {
+    "titre": "Journée Portes Ouvertes",
+    "categorie": "Information",
+    "date": "2026-01-20T10:00:00.000Z",
+    "lieu": "Campus Principal",
+    "statut": "planifie"
+  },
+  {
+    "titre": "Atelier Blockchain",
+    "categorie": "Formation",
+    "date": "2026-02-15T15:30:00.000Z",
+    "lieu": "Salle I-205",
+    "statut": "planifie"
+  },
+  {
+    "titre": "Gala de Fin d'Année",
+    "categorie": "Cérémonie",
+    "date": "2026-06-30T19:00:00.000Z",
+    "lieu": "Grande Salle",
+    "statut": "confirme"
+  }
+
 ]

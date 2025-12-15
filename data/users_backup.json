@@ -30,5 +30,13 @@
     "role": "client",
     "createdAt": "2025-12-08T22:43:57.863Z",
     "__v": 0
+  },
+  {
+    "_id": "69401fa2e6b68318c5085249",
+    "name": "Alice Bash",
+    "email": "alice.bash@test.com",
+    "role": "client",
+    "createdAt": "2025-12-15T14:48:02.802Z",
+    "__v": 0
   }
 ]

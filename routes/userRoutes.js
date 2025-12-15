@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { validateUser } from '../middlewares/validators.js';
 
 const router = express.Router();
 
@@ -35,20 +36,19 @@ initUsers(); // On lance l'init
 // --- ROUTES API ---
 
 // 1. Écriture (POST) : Créer un nouvel utilisateur
-router.post('/', async (req, res) => {
+router.post('/', validateUser, async (req, res, next) => {
     try {
         const newUser = new User(req.body);
         const savedUser = await newUser.save();
 
-        // BONUS : UTILISATION DE fs.writeFileSync
         // À chaque création, on met à jour le fichier de backup local
         const allUsers = await User.find();
         fs.writeFileSync(backupPath, JSON.stringify(allUsers, null, 2), 'utf-8');
         console.log(" (fs.writeFileSync) Backup utilisateurs mis à jour.");
 
-        res.status(201).json(savedUser);
+      res.status(201).json(savedUser);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        next(error); // On passe l'erreur au middleware
     }
 });
 

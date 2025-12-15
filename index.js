@@ -8,6 +8,7 @@ import logRoutes from "./routes/logRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 dotenv.config();
 
@@ -31,8 +32,11 @@ app.locals.start = (async () => {
             res.send('API Projet BDD en ligne ');
         });
 
+        app.use(errorHandler);
+
         // 3. Lancement du serveur
         const PORT = process.env.PORT || 3000;
+        
         app.listen(PORT, () => {
             console.log(`📡 Serveur disponible sur http://localhost:${PORT}`);
         });

@@ -1,56 +1,67 @@
 import express from "express";
-import mongoose from "mongoose";
+import Log from "../models/log.js"; // Assure-toi que le model est bien Log.js ou log.js
 
 const router = express.Router();
 
-/**
- * POST /api/logs
- * Permet d'ecrire un log JSON representant une activite critique.
- */
-router.post("/", async (req, res) => {
+// --- ROUTE 1 : Écriture (POST) ---
+//Consigner une activité critique
+router.post("/", async (req, res, next) => {
   try {
-    const {
-      action,
-      performedBy,
-      status,
-      severity = "critical",
-      context = {},
-      metadata = {},
-    } = req.body;
+    const newLog = new Log(req.body);
+    const savedLog = await newLog.save();
+    res.status(201).json(savedLog);
+  } catch (error) {
+    next(error);
+  }
+});
 
-    if (!action || !performedBy || !status) {
-      return res.status(400).json({
-        message:
-          "Les champs 'action', 'performedBy' et 'status' sont obligatoires.",
-      });
+// Lecture Avancée (GET) ---
+// Filtrer par sévérité et limiter les résultats (pagination) [cite: 44]
+//GET /api/logs?severity=critical&limit=5
+router.get("/", async (req, res, next) => {
+  try {
+    const { severity, limit } = req.query;
+    const filter = {};
+    
+    if (severity) {
+      filter.severity = severity;
     }
 
-    const db = mongoose.connection.db;
-    const logsCollection = db.collection("logs");
+    const logs = await Log.find(filter)
+      .sort({ createdAt: -1 }) // Les plus récents en premier
+      .limit(parseInt(limit) || 20);
 
-    const logEntry = {
-      action,
-      performedBy,
-      status,
-      severity,
-      context,
-      metadata,
-      ipAddress: req.ip,
-      userAgent: req.get("user-agent"),
-      createdAt: new Date(),
-    };
-
-    const result = await logsCollection.insertOne(logEntry);
-
-    res.status(201).json({
-      message: "Activite critique consignee avec succes.",
-      logId: result.insertedId,
-    });
+    res.json(logs);
   } catch (error) {
-    console.error("Erreur lors de l'ecriture du log:", error);
-    res.status(500).json({ message: "Erreur: " + error.message });
+    next(error);
+  }
+});
+
+// --- ROUTE 3 : Agrégation (GET) ---
+// Compter les logs par type de sévérité [cite: 45]
+//GET /api/logs/stats/count-by-severity
+router.get("/stats/count-by-severity", async (req, res, next) => {
+  try {
+    const stats = await Log.aggregate([
+      {
+        $group: {
+          _id: "$severity",           
+          count: { $sum: 1 }          
+        }
+      },
+      {
+        $project: {
+          severity: "$_id",
+          count: 1,
+          _id: 0
+        }
+      }
+    ]);
+
+    res.json({ data: stats });
+  } catch (error) {
+    next(error);
   }
 });
 
 export default router;
-
